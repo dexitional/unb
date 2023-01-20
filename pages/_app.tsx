@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-//import OneSignal from 'react-onesignal';
+import OneSignal from 'react-onesignal';
 import Analytics from 'analytics'
 //@ts-ignore
 import googleAnalytics from '@analytics/google-analytics'
@@ -23,6 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   analytics.page()
 
   useEffect(() => {
+    /*
     if (typeof window !== undefined) {
       // @ts-ignore
       window.OneSignal = window.OneSignal || [];
@@ -41,6 +42,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       // @ts-ignore
       window.OneSignal = undefined;
     };
+    */
+    OneSignal.init({ appId: '2403f9ce-30d0-4d3e-95e3-748cb571bce3' });
   }, []);
 
   return <Component {...pageProps} />
