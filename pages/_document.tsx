@@ -1,5 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
-
+import Script from 'next/script'
 function MyDocument() {
   return (
     <Html>
@@ -9,6 +9,8 @@ function MyDocument() {
          <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@100;200;400;500;600;700;800&display=swap" rel="stylesheet" />
          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;400;500;600;700;800&display=swap" rel="stylesheet" />
          <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;400;500;600;700;800&display=swap" rel="stylesheet" />
+         <Script src={`https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js`} />
+         
       </Head>
      
       <body className="font-inter">
