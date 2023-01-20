@@ -10,6 +10,7 @@ function MyDocument() {
          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;400;500;600;700;800&display=swap" rel="stylesheet" />
          <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;400;500;600;700;800&display=swap" rel="stylesheet" />
       </Head>
+     
       <body className="font-inter">
         <Main />
         <NextScript />

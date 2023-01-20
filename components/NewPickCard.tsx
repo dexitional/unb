@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-function NewPickCard({title,category,author,date,read,link}: any) {
+function NewPickCard({ title,category,author,date,read,link }: any) {
   return (
     <Link href="" className="snap-start">
     <div className="p-6 sm:py-8 sm:px-6 w-[85vw] sm:w-[18rem] sm:h-56 flex flex-col justify-between rounded-3xl hover:bg-white border border-slate-50 hover:border-slate-100 hover:shadow-xl overflow-hidden">

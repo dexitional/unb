@@ -11,6 +11,7 @@ import TopSection from './TopSection'
 import { Menu } from '@headlessui/react'
 import { useRouter } from 'next/router'
 import MobileMenu from './MobileMenu'
+import { GiHamburgerMenu } from 'react-icons/gi'
 
 
 function Header() {
@@ -24,12 +25,13 @@ function Header() {
           <TopSection />
           {/* Main Menu Bar */}
           <div className="z-20 w-full bg-[#f9fafe] border-b-2 border-[#e3e8f4] shadow-md shadow-gray-200/30">
-            <div className="mx-auto max-w-7xl flex items-center justify-between text-[1.05rem] text-gray-700 font-medium">
-              <div className="flex-1 flex justify-between items-center space-x-4 font-medium">
+            <div className="relative mx-auto max-w-7xl flex items-center justify-between text-[1.05rem] text-gray-700 font-medium">
+              <div className="px-2 flex-1 flex justify-between items-center space-x-4 font-medium">
                 <LogoBox />
                 <MainMenu />
-                <MobileMenu />
+                <GiHamburgerMenu className="mx-4 p-2 w-10 h-10 bg-red-100 rounded-sm" />
               </div>
+              {/* <MobileMenu /> */}
               <AccountBox />
             </div>
           </div>
