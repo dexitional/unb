@@ -26,7 +26,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (typeof window !== undefined) {
       // @ts-ignore
       window.OneSignal = window.OneSignal || [];
+      // @ts-ignore
       OneSignal.push(function () {
+        // @ts-ignore
         OneSignal.init({
           appId: "2403f9ce-30d0-4d3e-95e3-748cb571bce3",
           notifyButton: {
