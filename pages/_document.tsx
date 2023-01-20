@@ -9,7 +9,7 @@ function MyDocument() {
          <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@100;200;400;500;600;700;800&display=swap" rel="stylesheet" />
          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;400;500;600;700;800&display=swap" rel="stylesheet" />
          <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;400;500;600;700;800&display=swap" rel="stylesheet" />
-         <script async src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"></script>
+         <Script async src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"></Script>
       </Head>
      
       <body className="font-inter">
