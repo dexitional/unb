@@ -7,11 +7,13 @@ import Layout from '../../components/Layout'
 import NewsCard from '../../components/NewsCard'
 import PageTitle from '../../components/PageTitle'
 import { sanityClient, urlFor } from '../../sanity'
+import { blockContentToPlainText } from 'react-portable-text'
+
 const limit = 9;
 const readingTime = require('reading-time');
 
-function index({ posts,category, num }: any) {
-  console.log(posts,category,num)
+function index({ posts,category,total,num }: any) {
+  console.log(posts,category,total,num)
   const router = useRouter()
   const { slug = "" } = router.query
   const [ data,setData ] = useState(posts)
@@ -38,7 +40,7 @@ function index({ posts,category, num }: any) {
       }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
 
   },[])
 
@@ -53,7 +55,7 @@ function index({ posts,category, num }: any) {
               {/*  Articles */}
               <div className="grid sm:grid-cols-3 gap-8">
                 { data?.map((row:any, i:React.Key) => {
-                  const stats = readingTime(row.title);
+                  const stats = readingTime(blockContentToPlainText(row.body));
                   return (
                     <NewsCard key={i} title={row.title} image={urlFor(row.mainImage).width(600).url()} category={row.categories[0]} author={row.name} date={moment(row._createdAt).format('LL')} read={stats.text} link={`/${row.slug.current}`}/>
                   )
@@ -61,10 +63,11 @@ function index({ posts,category, num }: any) {
               </div>
               {/* Loader */}
               <div className="flex items-center justify-center">
-                { !loading 
+                { loading 
+                  ? <FaCloudRain className="p-4 h-16 w-16 border-2 border-blue-600 rounded-full text-blue-600" />
+                  : data.length < total
                   ? <button onClick={loadMore} className="px-5 py-3 font-semibold hover:bg-blue-600 hover:border-white hover:text-white border border-gray-300 rounded-lg">Load More</button>
-                  : <FaCloudRain className="p-4 h-16 w-16 border-2 border-blue-600 rounded-full text-blue-600" />
-                }
+                  : null }
               </div>
            </div>
         </div>
@@ -79,7 +82,7 @@ export async function getServerSideProps(context: any, num = 0 ) {
   {
     "posts": *[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[$start..$end],
     "category": *[_type == "category" && $slug == slug.current] { title,slug}[0],
-
+    "total": count(*[_type == "post" && $slug in categories[]->slug.current]) 
   }
   `
   try {
@@ -89,6 +92,7 @@ export async function getServerSideProps(context: any, num = 0 ) {
       props: {
         posts: result?.posts,
         category: result?.category,
+        total: result?.total,
         num
       }
     }
