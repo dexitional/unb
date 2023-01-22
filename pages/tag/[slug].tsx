@@ -9,10 +9,9 @@ import { sanityClient } from '../../sanity'
 const limit = 9;
 
 function index({ posts, num }: any) {
-  
+  console.log(posts,num)
   const router = useRouter()
   const { slug = "" } = router.query
-  console.log(router)
   const [ data,setData ] = useState(posts)
   const [ start,setStart ] = useState(num)
   const [ loading,setLoading ] = useState(false)

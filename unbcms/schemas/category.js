@@ -29,16 +29,20 @@ export default {
       of: [{type: 'reference', to: {type: 'category'}}],
     },
     {
-      name: 'is-section',
-      title: 'Sub-section ?',
+      name: 'is_section',
+      title: 'Show in Sub-Menu Section ?',
       type: 'string',
-      options: ['yes','no'],
+      options: {
+        list: [{ value: '1', title: 'Yes' }, {value: '0', title: 'No'}],
+      }
     },
     {
-      name: 'is-topic',
-      title: 'Topic ?',
+      name: 'is_topic',
+      title: 'Show in Topics Section?',
       type: 'string',
-      options: ['yes','no'],
+      options: {
+        list: [{ value: '1', title: 'Yes' }, {value: '0', title: 'No'}],
+      }
     },
     {
       name: 'description',
