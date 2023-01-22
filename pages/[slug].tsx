@@ -29,7 +29,7 @@ function index({ post,recent }: Props) {
       <meta property="og:image" content={post?.mainImage && urlFor(post?.mainImage).width(600).url()} />
       <meta property="og:type" content="profile.image" />
       <meta property="og:url" content={`${siteUrl}/${post?.slug.current}`} />
-      <meta name="description" content={blockContentToPlainText(post?.body)} /><meta name="keywords" content={post?.keywords} />
+      <meta name="description" content={blockContentToPlainText(post?.body).substring(0,160)} /><meta name="keywords" content={post?.keywords} />
       <meta name="author" content={post?.name} />
     </Head>
     <Layout>
