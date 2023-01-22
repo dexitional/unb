@@ -30,7 +30,7 @@ function index({ post,recent }: Props) {
       <meta property="og:type" content="profile.image" />
       <meta property="og:url" content={`${siteUrl}/${post?.slug.current}`} />
       {/* <meta name="description" content="Free Web tutorials" /> */}
-      <meta name="keywords" content={post?.keyword} />
+      <meta name="keywords" content={post?.keywords} />
       <meta name="author" content={post?.name} />
     </Head>
     <Layout>
@@ -118,7 +118,7 @@ interface Props {
 
 const query = `
 {
-  "post": *[_type == "post" && slug.current == $slug][0]{title,slug,keyword,"name": author->name,"avatar": author->image,"categories": categories[]->{title,slug},mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} },
+  "post": *[_type == "post" && slug.current == $slug][0]{title,slug,keywords,"name": author->name,"avatar": author->image,"categories": categories[]->{title,slug},mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} },
   "recent": *[_type == "post"] | order(_createdAt desc) {_id,title,author->{name,image},categories[]->{title,slug},mainImage,slug,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} } [0...9]
 }
   `
