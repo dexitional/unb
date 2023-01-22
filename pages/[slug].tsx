@@ -18,7 +18,7 @@ interface Props {
 }
 
 function index({ post,recent }: Props) {
-  const siteUrl = `https://uccnoticeboard.info`
+  const siteUrl = `https://www.uccnoticeboard.info`
   return (
     <>
     <Head>
@@ -118,7 +118,7 @@ interface Props {
 
 const query = `
 {
-  "post": *[_type == "post" && slug.current == $slug][0]{title,slug,"name": author->name,"avatar": author->image,"categories": categories[]->{title,slug},mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} },
+  "post": *[_type == "post" && slug.current == $slug][0]{title,slug,keyword,"name": author->name,"avatar": author->image,"categories": categories[]->{title,slug},mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} },
   "recent": *[_type == "post"] | order(_createdAt desc) {_id,title,author->{name,image},categories[]->{title,slug},mainImage,slug,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} } [0...9]
 }
   `
