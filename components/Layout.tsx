@@ -4,8 +4,9 @@ import Header from '../components/Header'
 function Layout({ children }: any) {
   return (
     <div>
+      {/* @ts-ignore */}
       <Header />
-      {/* Main Content */}
+       {/* Main Content */}
        {children}
     </div>
   )

@@ -13,7 +13,6 @@ const limit = 9;
 const readingTime = require('reading-time');
 
 function index({ posts,category,total,num }: any) {
-  console.log(posts,category,total,num)
   const router = useRouter()
   const { slug = "" } = router.query
   const [ data,setData ] = useState(posts)
@@ -87,7 +86,6 @@ export async function getServerSideProps(context: any, num = 0 ) {
   `
   try {
     const result = await sanityClient.fetch(query, { slug,start:num,end:limit })
-    console.log(result,slug)
     return {
       props: {
         posts: result?.posts,

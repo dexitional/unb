@@ -31,17 +31,17 @@ export default {
     {
       name: 'is_section',
       title: 'Show in Sub-Menu Section ?',
-      type: 'string',
+      type: 'number',
       options: {
-        list: [{ value: '1', title: 'Yes' }, {value: '0', title: 'No'}],
+        list: [{ value: 1, title: 'Yes' }, {value: 0, title: 'No'}],
       }
     },
     {
       name: 'is_topic',
       title: 'Show in Topics Section?',
-      type: 'string',
+      type: 'number',
       options: {
-        list: [{ value: '1', title: 'Yes' }, {value: '0', title: 'No'}],
+        list: [{ value: 1, title: 'Yes' }, {value: 0, title: 'No'}],
       }
     },
     {

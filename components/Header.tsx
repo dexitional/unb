@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import AccountBox from './AccountBox'
 import LogoBox from './LogoBox'
 import MainMenu from './MainMenu'
@@ -14,15 +14,38 @@ import MobileMenu from './MobileMenu'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { IoMdSearch } from 'react-icons/io'
 import SubMenu2 from './SubMenu2'
+import { sanityClient } from '../sanity'
 
 
-function Header() {
+async function Header() {
    const router = useRouter()
    const { route } = router
-   console.log(route)
+   const [ data,setData ] = useState<any>({})
+   
+   const loadMenus = async () => {
+       try{
+        const query = `{ 
+          "mainmenu": *[_type == "category" && order == 1 ] | order(_id asc) { title,slug,"categories": subcats[]->{ title,slug } },
+          "sectionmenu": *[_type == "category" && is_section == 1 ] | order(_id asc) { title,slug } 
+         }`
+         const result = await sanityClient.fetch(query)
+         console.log(result)
+         if(result){
+            setData({ ...result })
+         }
+       } catch(e){
+         console.log(e)
+       }
+   }
+ 
+   useEffect(() => {
+      loadMenus()
+   },[])
+
+
+
    return (
-    
-      <div className="z-20 w-full sticky top-0 bg-white">
+     <div className="z-20 w-full sticky top-0 bg-white">
           {/* Top Nav */}
           <TopSection />
           {/* Main Menu Bar */}
@@ -39,7 +62,7 @@ function Header() {
                 </Menu>
               
                 <LogoBox />
-                <MainMenu />
+                <MainMenu data={ data?.mainmenu } />
                 <IoMdSearch className="sm:hidden mx-4 p-2 w-10 h-10 bg-red-100 rounded-md" />
               </div>
               <AccountBox />
