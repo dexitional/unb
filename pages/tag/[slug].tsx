@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { FaCloudRain } from 'react-icons/fa'
@@ -5,11 +6,12 @@ import Breadcrump from '../../components/Breadcrump'
 import Layout from '../../components/Layout'
 import NewsCard from '../../components/NewsCard'
 import PageTitle from '../../components/PageTitle'
-import { sanityClient } from '../../sanity'
+import { sanityClient, urlFor } from '../../sanity'
 const limit = 9;
+const readingTime = require('reading-time');
 
-function index({ posts, num }: any) {
-  console.log(posts,num)
+function index({ posts,category, num }: any) {
+  console.log(posts,category,num)
   const router = useRouter()
   const { slug = "" } = router.query
   const [ data,setData ] = useState(posts)
@@ -45,12 +47,17 @@ function index({ posts, num }: any) {
       <div className="p-5 w-full min-h-screen bg-[#f9fafe] snap-y snap-mandatory">
         <div className="py-6 sm:mx-auto sm:max-w-7xl flex flex-col space-y-6">
            {/* <Breadcrump /> */}
-           <PageTitle title="News" />
+           <PageTitle title={category?.title} />
            {/* Content Cards */}
            <div className="space-y-10">
               {/*  Articles */}
               <div className="grid sm:grid-cols-3 gap-8">
-                <NewsCard title="Adwoa" category="News" author="John manu" date="killer" read="3 min read" link="/"/>
+                { data?.map((row:any, i:React.Key) => {
+                  const stats = readingTime(row.title);
+                  return (
+                    <NewsCard key={i} title={row.title} image={urlFor(row.mainImage).width(600).url()} category={row.categories[0]} author={row.name} date={moment(row._createdAt).format('LL')} read={stats.text} link={`/${row.slug.current}`}/>
+                  )
+                })}
               </div>
               {/* Loader */}
               <div className="flex items-center justify-center">
@@ -68,18 +75,20 @@ function index({ posts, num }: any) {
 
 export async function getServerSideProps(context: any, num = 0 ) {
   const { slug = "" } = context.params
-  const range = `${num}..${limit}`
   const query = `
   {
-    "posts": *[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories": categories[]->title,mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[$range],
+    "posts": *[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[$start..$end],
+    "category": *[_type == "category" && $slug == slug.current] { title,slug}[0],
+
   }
   `
   try {
-    const result = await sanityClient.fetch(query, { slug,range })
-    console.log(result,slug,range)
+    const result = await sanityClient.fetch(query, { slug,start:num,end:limit })
+    console.log(result,slug)
     return {
       props: {
         posts: result?.posts,
+        category: result?.category,
         num
       }
     }
