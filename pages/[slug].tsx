@@ -22,7 +22,7 @@ function index({ post,recent }: Props) {
   return (
     <>
     <Head>
-      <title>Insidergh.com | Category</title>
+      <title>UNB | {post?.title}</title>
       <link rel="icon" href="/favicon.ico" />
       <meta name="HandheldFriendly" content="true" />
       <meta property="og:title" content={post?.title} />

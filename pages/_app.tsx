@@ -8,8 +8,6 @@ import { useEffect } from 'react';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // One-Signal Integration
- // OneSignal.init({ appId: '2403f9ce-30d0-4d3e-95e3-748cb571bce3' });
   // Google Analytics Integration
   const analytics = Analytics({
     app: 'uccnoticeboaed.info',
@@ -20,32 +18,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     ]
   })
   /* Track a page view */
-  analytics.page()
+     analytics.page()
 
   useEffect(() => {
-    /*
-    if (typeof window !== undefined) {
-      // @ts-ignore
-      window.OneSignal = window.OneSignal || [];
-      // @ts-ignore
-      OneSignal.push(function () {
-        // @ts-ignore
-        OneSignal.init({
-          appId: "2403f9ce-30d0-4d3e-95e3-748cb571bce3",
-          notifyButton: {
-            enable: true,
-          },
-        });
-      });
-    }
-    return () => {
-      // @ts-ignore
-      window.OneSignal = undefined;
-    };
-    */
     OneSignal.init({ appId: '2403f9ce-30d0-4d3e-95e3-748cb571bce3' });
   }, []);
-
   return <Component {...pageProps} />
 }
 

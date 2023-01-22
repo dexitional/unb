@@ -1,7 +1,5 @@
 import React from 'react'
 import Divider from '../components/Divider'
-import NewPickCard from '../components/NewPickCard'
-import Header from '../components/Header'
 import FeaturedCard from '../components/FeaturedCard'
 import CategoryPick from '../components/CategoryPick'
 import LumenCard from '../components/LumenCard'
