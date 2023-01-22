@@ -9,7 +9,7 @@ import ArticleAd from '../components/ArticleAd'
 import { sanityClient, urlFor } from '../sanity'
 import { Post } from '../typings'
 import Head from 'next/head'
-import PortableText from 'react-portable-text'
+import PortableText,{blockContentToPlainText} from 'react-portable-text'
 
 interface Props {
   data: any,
@@ -29,8 +29,7 @@ function index({ post,recent }: Props) {
       <meta property="og:image" content={post?.mainImage && urlFor(post?.mainImage).width(600).url()} />
       <meta property="og:type" content="profile.image" />
       <meta property="og:url" content={`${siteUrl}/${post?.slug.current}`} />
-      {/* <meta name="description" content="Free Web tutorials" /> */}
-      <meta name="keywords" content={post?.keywords} />
+      <meta name="description" content={blockContentToPlainText(post?.body)} /><meta name="keywords" content={post?.keywords} />
       <meta name="author" content={post?.name} />
     </Head>
     <Layout>
