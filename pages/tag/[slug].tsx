@@ -52,11 +52,6 @@ function index({ posts, num }: any) {
               {/*  Articles */}
               <div className="grid sm:grid-cols-3 gap-8">
                 <NewsCard title="Adwoa" category="News" author="John manu" date="killer" read="3 min read" link="/"/>
-                <NewsCard title="Adwoa" category="News" author="John manu" date="killer" read="3 min read" link="/"/>
-                <NewsCard title="Adwoa" category="News" author="John manu" date="killer" read="3 min read" link="/"/>
-                <NewsCard title="Adwoa" category="News" author="John manu" date="killer" read="3 min read" link="/"/>
-                <NewsCard title="Adwoa" category="News" author="John manu" date="killer" read="3 min read" link="/"/>
-                <NewsCard title="Adwoa" category="News" author="John manu" date="killer" read="3 min read" link="/"/>
               </div>
               {/* Loader */}
               <div className="flex items-center justify-center">
@@ -82,6 +77,7 @@ export async function getServerSideProps(context: any, num = 0 ) {
   `
   try {
     const result = await sanityClient.fetch(query, { slug,range })
+    console.log(result,slug,range)
     return {
       props: {
         posts: result?.posts,
