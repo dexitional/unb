@@ -11,7 +11,12 @@
     "@sanity/base",
     "@sanity/default-layout",
     "@sanity/default-login",
-    "@sanity/desk-tool"
+    "@sanity/desk-tool",
+    "webhook-deploy",
+    "onesignal",
+    "visual-options",
+    "json-to-docs",
+    "note-field"
   ],
   "env": {
     "development": {

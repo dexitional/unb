@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import React, { useRef, useState } from 'react'
 import { IoIosArrowDown,IoIosArrowUp } from 'react-icons/io'
 import { Menu } from '@headlessui/react'
+import SubMenu2 from './SubMenu2'
 
 function MenuPill({ title,link,activeMenu,setActiveMenu,hasMenu }: any) {
   const [ click,setClick ] = useState(false)
@@ -15,8 +16,10 @@ function MenuPill({ title,link,activeMenu,setActiveMenu,hasMenu }: any) {
   }
 
   return (
-    hasMenu ?
-    <Menu.Button as={React.Fragment}>
+    <Menu>
+    <div className="relative">
+    { hasMenu ?
+    <Menu.Button  ref={ref}>
     <div onClick={onClick} className="py-2.5 px-4 flex items-center space-x-2 hover:bg-slate-200/80 rounded-xl cursor-pointer">
         <span>{title}</span>
         { hasMenu
@@ -37,6 +40,12 @@ function MenuPill({ title,link,activeMenu,setActiveMenu,hasMenu }: any) {
          : null
         }
     </div>
+    }
+      <Menu.Items>
+        <SubMenu2 />
+      </Menu.Items>
+    </div>
+    </Menu>
   )
 }
 

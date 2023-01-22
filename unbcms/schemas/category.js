@@ -29,6 +29,18 @@ export default {
       of: [{type: 'reference', to: {type: 'category'}}],
     },
     {
+      name: 'is-section',
+      title: 'Sub-section ?',
+      type: 'string',
+      options: ['yes','no'],
+    },
+    {
+      name: 'is-topic',
+      title: 'Topic ?',
+      type: 'string',
+      options: ['yes','no'],
+    },
+    {
       name: 'description',
       title: 'Description',
       type: 'text',
