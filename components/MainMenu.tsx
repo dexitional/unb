@@ -5,9 +5,13 @@ function MainMenu({ data }: any) {
   const [ activeMenu,setActiveMenu ] = useState(null)
   return (
     <div className="hidden sm:flex space-x-3">
-       { data?.map(( row:any, i:React.Key ) => (
-        <MenuPill key={i} title={row.title} link={`/tag/${row.slug.current}`} activeMenu={activeMenu} setActiveMenu={setActiveMenu} hasMenu />
-       ))}
+       { data?.map(( row:any, i:React.Key ) => 
+         row?.categories?.length > 0
+        ? (<MenuPill key={i} title={row.title} link={`/tag/${row.slug.current}`} activeMenu={activeMenu} setActiveMenu={setActiveMenu} hasMenu />)
+        : (<MenuPill key={i} title={row.title} link={`/tag/${row.slug.current}`} activeMenu={activeMenu} setActiveMenu={setActiveMenu} />)
+       )}
+
+
         <MenuPill title="General News" link="/general-news" activeMenu={activeMenu} setActiveMenu={setActiveMenu} hasMenu />
         <MenuPill title="Administration" link="/community" activeMenu={activeMenu} setActiveMenu={setActiveMenu} hasMenu />
         <MenuPill title="Scholarships" link="/scholarship" activeMenu={activeMenu} setActiveMenu={setActiveMenu} />

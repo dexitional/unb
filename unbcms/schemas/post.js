@@ -52,6 +52,14 @@ export default {
       title: 'Body',
       type: 'blockContent',
     },
+    {
+      name: 'is_pick',
+      title: 'UNB Pick ?',
+      type: 'number',
+      options: {
+        list: [{ value: 1, title: 'Yes' }, {value: 0, title: 'No'}],
+      }
+    },
   ],
 
   preview: {

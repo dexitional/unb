@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 function NewPickCard({ title,category,author,date,read,link }: any) {
   return (
-    <Link href="" className="snap-start">
+    <Link href={link} className="snap-start">
     <div className="p-6 sm:py-8 sm:px-6 w-[85vw] sm:w-[18rem] sm:h-56 flex flex-col space-y-2 justify-between rounded-3xl hover:bg-white border border-slate-50 hover:border-slate-100 hover:shadow-xl overflow-hidden">
         <div className="space-y-4">
             <span className="px-4 py-2 rounded-md bg-[#80d34a] font-jetbrains font-semibold">{category}</span>

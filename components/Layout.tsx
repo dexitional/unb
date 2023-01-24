@@ -1,14 +1,15 @@
 import React from 'react'
-import Header from '../components/Header'
+import Header from './Header'
 
 function Layout({ children }: any) {
   return (
+    <>
+    <Header />
     <div>
-      {/* @ts-ignore */}
-      <Header />
        {/* Main Content */}
        {children}
-    </div>
+    </div> 
+    </>
   )
 }
 

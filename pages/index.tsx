@@ -7,10 +7,12 @@ import ContentSection from '../components/ContentSection'
 import PickSection from '../components/PickSection'
 import IntroSection from '../components/IntroSection'
 import Layout from '../components/Layout'
+import { sanityClient } from '../sanity'
 
 
 
-function index() {
+function index({ topics, picks,}: any) {
+  console.log(topics,picks)
   return (
     <Layout>
       <div className="w-full min-h-screen bg-[#f9fafe] snap-y snap-mandatory">
@@ -21,13 +23,13 @@ function index() {
           <section className="w-full flex flex-col sm:flex-row sm:justify-between space-y-8 sm:space-y-0 sm:space-x-8">
             <FeaturedCard />
             <div className="w-full sm:w-[40%] flex flex-col space-y-8"> 
-              <CategoryPick />
+              <CategoryPick data={topics} />
               <LumenCard />
             </div>
           </section>
           <Divider margin="my-10"/>
           {/* Section: Editors Pick */}
-          <PickSection />
+          <PickSection data={picks} />
           <Divider />
         </div>
         {/* Sections Category Contents */}
@@ -35,6 +37,54 @@ function index() {
       </div>
     </Layout>
   )
+}
+
+
+export async function getServerSideProps(context: any) {
+  var sections;
+  const query = `
+  {
+    "topics": *[_type == "category" && is_topic == 1]  { title,slug},
+    "spots": *[_type == "post"] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[0..5],
+    "picks": *[_type == "post"] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[0..3],
+    "sections": *[_type == "category" && is_section == 1] { title,slug }
+  }
+  `
+  try {
+    const result = await sanityClient.fetch(query)
+    if(result){
+       //const section_ids = result.sections.reduce((acc: any,cur: any) => { acc+','+cur.slug },'')
+       const secs = result?.sections 
+       if(secs && secs.lenth > 0){
+         for(const sc of secs){
+           const sec = await sanityClient.fetch(`*[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }`,{ slug: sc.slug.current})
+           if(sec && sec.length > 0) sections = [...sec ]
+         }
+       }
+       
+    }
+
+
+
+
+
+    return {
+      props: {
+        topics: result?.topics,
+        spots: result?.spots,
+        picks: result?.picks,
+        sections:[],
+      }
+    }
+  } catch(e){
+    console.log(e)
+    return {
+      props: {
+        posts: [],
+      }
+    }
+  }
+    
 }
 
 export default index
