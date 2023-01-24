@@ -11,8 +11,8 @@ import { sanityClient } from '../sanity'
 
 
 
-function index({ topics, picks,}: any) {
-  console.log(topics,picks)
+function index({ topics,picks,spots}: any) {
+  console.log("FEATURED: ",spots)
   return (
     <Layout>
       <div className="w-full min-h-screen bg-[#f9fafe] snap-y snap-mandatory">
@@ -21,7 +21,7 @@ function index({ topics, picks,}: any) {
           <IntroSection />
           {/* Section: Featured Notice & Paid Ads */}
           <section className="w-full flex flex-col sm:flex-row sm:justify-between space-y-8 sm:space-y-0 sm:space-x-8">
-            <FeaturedCard />
+            <FeaturedCard data={spots} />
             <div className="w-full sm:w-[40%] flex flex-col space-y-8"> 
               <CategoryPick data={topics} />
               <LumenCard />
@@ -45,8 +45,8 @@ export async function getServerSideProps(context: any) {
   const query = `
   {
     "topics": *[_type == "category" && is_topic == 1]  { title,slug},
-    "spots": *[_type == "post"] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[0..5],
-    "picks": *[_type == "post"] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[0..3],
+    "spots": *[_type == "post" && is_spot == 1] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[0..5],
+    "picks": *[_type == "post" && is_pick == 1] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[0..3],
     "sections": *[_type == "category" && is_section == 1] { title,slug }
   }
   `

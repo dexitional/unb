@@ -53,6 +53,14 @@ export default {
       type: 'blockContent',
     },
     {
+      name: 'is_spot',
+      title: 'Spotlight ?',
+      type: 'number',
+      options: {
+        list: [{ value: 1, title: 'Yes' }, {value: 0, title: 'No'}],
+      }
+    },
+    {
       name: 'is_pick',
       title: 'UNB Pick ?',
       type: 'number',

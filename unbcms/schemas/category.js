@@ -49,5 +49,10 @@ export default {
       title: 'Description',
       type: 'text',
     },
+    {
+      name: 'color',
+      title: 'Theme Color',
+      type: 'string',
+    }
   ],
 }
