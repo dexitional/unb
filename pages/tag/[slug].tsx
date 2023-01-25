@@ -52,7 +52,7 @@ function index({ posts,category,total,num }: any) {
            {/* Content Cards */}
            <div className="space-y-10">
               {/*  Articles */}
-              <div className="grid sm:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-8">
                 { data?.map((row:any, i:React.Key) => {
                   const stats = readingTime(blockContentToPlainText(row.body));
                   return (

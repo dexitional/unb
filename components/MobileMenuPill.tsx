@@ -9,7 +9,7 @@ export default function MobileMenuPill({ data }:any) {
           ? <Link href={`/tag/${data?.slug?.current}`}><h1 className="text-sm font-bold tracking-widest uppercase text-gray-900">{data?.title}</h1></Link>
           : <h1 className="text-sm font-bold tracking-widest uppercase text-gray-900">{data?.title}</h1>
         }
-        <div className="flex flex-col space-y-1.5 indent-2">
+        <div className="flex flex-col space-y-2.5 indent-2">
           { data?.categories?.map((row: any,i:React.Key) => (
            <Menu.Item key={i}>
              <Link href={`/tag/${row.slug.current}`}>
