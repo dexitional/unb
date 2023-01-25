@@ -50,7 +50,7 @@ function Header() {
                   <Menu.Button as={Fragment}>
                     <GiHamburgerMenu className="sm:hidden mx-4 p-2 w-10 h-10 bg-red-100 rounded-md" />
                   </Menu.Button>
-                  <Menu.Items as={Fragment}>
+                  <Menu.Items as={`div`}>
                     <MobileMenu data={data?.mainmenu} />
                   </Menu.Items>
                 </Menu>
