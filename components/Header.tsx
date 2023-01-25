@@ -43,12 +43,12 @@ function Header() {
     <div className="z-20 w-full sticky top-0 bg-white">
        {/* Top Nav */}
        <TopSection />
-       <div className="z-20 w-full bg-[#f9fafe] border-b-2 border-[#e3e8f4] shadow-md shadow-gray-200/30">
+       <div className="z-20 w-full bg-[#f9fafe] border-b-2 border-[#e3e8f4] shadow-sm shadow-gray-200/30">
            <div className="relative mx-auto max-w-7xl flex items-center justify-between text-[1.05rem] text-gray-700 font-medium">
               <div className="relative px-2 flex-1 flex justify-between items-center space-x-4 font-medium">
                 <Menu>
                   <Menu.Button as={Fragment}>
-                    <GiHamburgerMenu className="sm:hidden mx-4 p-2 w-10 h-10 bg-red-100 rounded-md" />
+                    <GiHamburgerMenu className="sm:hidden mx-4 p-2 w-10 h-10 border-2 text-border-blue-900 border-blue-900 bg-red-100 rounded-md" />
                   </Menu.Button>
                   <Menu.Items as={`div`}>
                     <MobileMenu data={data?.mainmenu} />
