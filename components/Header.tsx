@@ -18,7 +18,7 @@ function Header() {
   const loadMenus = async () => {
     try{
      const query = `{ 
-       "mainmenu": *[_type == "category" && order == 1 ] | order(_id asc) { title,slug,"categories": subcats[]->{ title,slug } },
+       "mainmenu": *[_type == "category" && order == 1 ] | order(position asc) { title,slug,"categories": subcats[]->{ title,slug } },
        "sectionmenu": *[_type == "category" && is_section == 1 ] | order(_id asc) { title,slug } 
       }`
       const result = await sanityClient.fetch(query)

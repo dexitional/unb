@@ -19,18 +19,23 @@ export default {
     },
     {
       name: 'order',
-      title: 'Menu Order',
+      title: 'Menu Type',
+      type: 'number',
+    },
+    {
+      name: 'position',
+      title: 'Position',
       type: 'number',
     },
     {
       name: 'subcats',
-      title: 'Sub-Categories',
+      title: 'Sub Categories',
       type: 'array',
       of: [{type: 'reference', to: {type: 'category'}}],
     },
     {
       name: 'is_section',
-      title: 'Show in Sub-Menu Section ?',
+      title: 'Show in SubMenu Section ?',
       type: 'number',
       options: {
         list: [{ value: 1, title: 'Yes' }, {value: 0, title: 'No'}],
