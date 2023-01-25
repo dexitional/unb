@@ -22,10 +22,8 @@ function Header() {
        "sectionmenu": *[_type == "category" && is_section == 1 ] | order(_id asc) { title,slug } 
       }`
       const result = await sanityClient.fetch(query)
-      console.log("HEADER: ", result)
       if(result){
         setData({ ...result })
-        console.log("HEADER: ", result)
       }
     } catch(e){
       console.log(e)

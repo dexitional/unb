@@ -8,16 +8,6 @@ function SectionMenu({data}: any) {
         { data?.map(( row:any, i:React.Key ) =>
           (<NavPill key={i} title={row.title} link={`/tag/${row.slug.current}`} />)
         )}
-
-        <NavPill title="UCC News" link="ucc-news" />
-        <NavPill title="UCC SRC" link="ucc-src" />
-        <NavPill title="Events" link="events" />
-        <NavPill title="Admissions" link="admissions" />
-        <NavPill title="How To" link="howto" />
-        <NavPill title="Announcements" link="announcements" />
-        <NavPill title="Education" link="education" />
-        <NavPill title="Lifestyle" link="lifestyle" />
-        <NavPill title="Tech" link="Tech" />
       </div>
     </div>
   )

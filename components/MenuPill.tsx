@@ -4,7 +4,7 @@ import { IoIosArrowDown,IoIosArrowUp } from 'react-icons/io'
 import { Menu } from '@headlessui/react'
 import SubMenu2 from './SubMenu2'
 
-function MenuPill({ title,link,activeMenu,setActiveMenu,hasMenu }: any) {
+function MenuPill({ title,link,activeMenu,setActiveMenu,hasMenu,subMenu }: any) {
   const [ click,setClick ] = useState(false)
   const ref = useRef(null);
   const router = useRouter()
@@ -41,7 +41,7 @@ function MenuPill({ title,link,activeMenu,setActiveMenu,hasMenu }: any) {
       </div>
     }
       <Menu.Items>
-        <SubMenu2 />
+        <SubMenu2 data={subMenu} />
       </Menu.Items>
     </div>
     </Menu>

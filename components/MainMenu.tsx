@@ -7,15 +7,9 @@ function MainMenu({ data }: any) {
     <div className="hidden sm:flex space-x-3">
        { data?.map(( row:any, i:React.Key ) => 
          row?.categories?.length > 0
-        ? (<MenuPill key={i} title={row.title} link={`/tag/${row.slug.current}`} activeMenu={activeMenu} setActiveMenu={setActiveMenu} hasMenu />)
-        : (<MenuPill key={i} title={row.title} link={`/tag/${row.slug.current}`} activeMenu={activeMenu} setActiveMenu={setActiveMenu} />)
+        ? (<MenuPill key={i} title={row.title} link={`/tag/${row.slug.current}`} activeMenu={activeMenu} setActiveMenu={setActiveMenu} subMenu={row?.categories} hasMenu />)
+        : (<MenuPill key={i} title={row.title} link={`/tag/${row.slug.current}`} activeMenu={activeMenu} setActiveMenu={setActiveMenu} subMenu={row?.categories} />)
        )}
-
-
-        <MenuPill title="General News" link="/general-news" activeMenu={activeMenu} setActiveMenu={setActiveMenu} hasMenu />
-        <MenuPill title="Administration" link="/community" activeMenu={activeMenu} setActiveMenu={setActiveMenu} hasMenu />
-        <MenuPill title="Scholarships" link="/scholarship" activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
-        <MenuPill title="Other Schools" link="/schools" activeMenu={activeMenu} setActiveMenu={setActiveMenu} hasMenu />
     </div>
   )
 }
