@@ -11,8 +11,8 @@ import { sanityClient } from '../sanity'
 
 
 
-function index({ topics,picks,spots}: any) {
-  console.log("FEATURED: ",spots)
+function index({ topics,picks,spots,sections}: any) {
+  console.log("SECTIONS: ",sections)
   return (
     <Layout>
       <div className="w-full min-h-screen bg-[#f9fafe] snap-y snap-mandatory">
@@ -41,7 +41,6 @@ function index({ topics,picks,spots}: any) {
 
 
 export async function getServerSideProps(context: any) {
-  var sections;
   const query = `
   {
     "topics": *[_type == "category" && is_topic == 1]  { title,slug},
@@ -51,29 +50,30 @@ export async function getServerSideProps(context: any) {
   }
   `
   try {
+    const sections = [];
     const result = await sanityClient.fetch(query)
     if(result){
-       //const section_ids = result.sections.reduce((acc: any,cur: any) => { acc+','+cur.slug },'')
        const secs = result?.sections 
        if(secs && secs.lenth > 0){
          for(const sc of secs){
+           let dm = { title: sc.title, slug: sc.slug, content: [] }
+           console.log("SC: ",sc)
            const sec = await sanityClient.fetch(`*[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }`,{ slug: sc.slug.current})
-           if(sec && sec.length > 0) sections = [...sec ]
-         }
+           if(sec && sec.length > 0) {
+             console.log("SEC: ",sec)
+             dm = { ...dm, content: sec }
+           }
+           sections.push(dm)
+        }
        }
-       
     }
-
-
-
-
 
     return {
       props: {
         topics: result?.topics,
         spots: result?.spots,
         picks: result?.picks,
-        sections:[],
+        sections,
       }
     }
   } catch(e){
