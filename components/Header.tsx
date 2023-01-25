@@ -43,7 +43,7 @@ function Header() {
     <div className="z-20 w-full sticky top-0 bg-white">
        {/* Top Nav */}
        <TopSection />
-       <div className="z-20 w-full bg-blue-100 sm:bg-[#f9fafe] border-b-2 border-[#e3e8f4] shadow-sm shadow-gray-200/30">
+       <div className="z-20 w-full bg-blue-100 sm:bg-[#f9fafe] border-b-2 border-blue-200 sm:border-[#e3e8f4] shadow-sm shadow-gray-200/30">
            <div className="relative mx-auto max-w-7xl flex items-center justify-between text-[1.05rem] text-gray-700 font-medium">
               <div className="relative px-2 py-1 flex-1 flex justify-between items-center space-x-4 font-medium">
                 <Menu>
