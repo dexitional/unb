@@ -48,7 +48,7 @@ function Header() {
               <div className="relative px-2 py-1 flex-1 flex justify-between items-center space-x-4 font-medium">
                 <Menu>
                   <Menu.Button as={Fragment}>
-                    <GiHamburgerMenu className="md:hidden mx-4 p-2 w-10 h-10 border text-border-blue-900 border-blue-900 bg-red-100 rounded-md" />
+                    <GiHamburgerMenu className="md:hidden mx-4 p-2 w-10 h-10 border text-blue-900 border-blue-900 bg-red-100 rounded-md" />
                   </Menu.Button>
                   <Menu.Items as={`div`}>
                     <MobileMenu data={data?.mainmenu} />
@@ -56,7 +56,7 @@ function Header() {
                 </Menu>
                 <LogoBox />
                 <MainMenu data={data?.mainmenu} />
-                <IoMdSearch className="md:hidden mx-4 p-2 w-10 h-10 border text-border-blue-900 border-blue-900 bg-red-100 rounded-md" />
+                <IoMdSearch className="md:hidden mx-4 p-2 w-10 h-10 border text-blue-900 border-blue-900 bg-red-100 rounded-md" />
               </div>
               <AccountBox />
            </div>  
