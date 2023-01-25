@@ -33,7 +33,7 @@ function index({ topics,picks,spots,sections}: any) {
           <Divider />
         </div>
         {/* Sections Category Contents */}
-         <ContentSection data={[]}/>
+         <ContentSection data={sections}/>
       </div>
     </Layout>
   )
@@ -50,37 +50,53 @@ export async function getServerSideProps(context: any) {
   }
   `
   try {
-    const sections = [];
+    let sections = [];
+    var mdata = [];
+
     const result = await sanityClient.fetch(query)
     if(result){
        const secs = result?.sections 
-       if(secs && secs.lenth > 0){
-         for(const sc of secs){
-           let dm = { title: sc.title, slug: sc.slug, content: [] }
-           console.log("SC: ",sc)
-           const sec = await sanityClient.fetch(`*[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }`,{ slug: sc.slug.current})
-           if(sec && sec.length > 0) {
-             console.log("SEC: ",sec)
-             dm = { ...dm, content: sec }
-           }
-           sections.push(dm)
-        }
+       if(secs && secs.length > 0){
+        //  for(const sc of secs){
+        //    let dm = { title: sc.title, slug: sc.slug, content: [] }
+        //    console.log("SC: ",sc)
+        //    const sec = await sanityClient.fetch(`*[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }`,{ slug: sc.slug.current})
+        //    if(sec && sec.length > 0) {
+        //      console.log("SEC: ",sec)
+        //      dm = { ...dm, content: sec }
+        //    }
+        //    sections.push(dm)
+        //  }
+          
+          mdata = await Promise.all(secs.map(async (sc: any,i: number) => {
+            let dm = { title: sc.title, slug: sc.slug, content: [] }
+            console.log("SC: ",sc)
+            const sec = await sanityClient.fetch(`*[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }`,{ slug: sc.slug.current})
+            console.log("SEC DATA: ",sec)
+            if(sec && sec.length > 0) 
+              return dm = { ...dm, content: sec }
+            return dm;
+          }))
+
+          console.log(mdata)
        }
     }
-
     return {
       props: {
         topics: result?.topics,
         spots: result?.spots,
         picks: result?.picks,
-        sections,
+        sections: mdata,
       }
     }
   } catch(e){
     console.log(e)
     return {
       props: {
-        posts: [],
+        topics: [],
+        spots: [],
+        picks: [],
+        sections: [],
       }
     }
   }

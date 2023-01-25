@@ -8,7 +8,7 @@ function NewsIndexCard({title,image,link,author,date,read}: any) {
     <Link href={link} className="snap-start">
     <div className="w-[85vw] sm:max-w-[480px] rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden">
       <div className="relative">
-        <Image src={image ? image : FeaturedImg } alt="" style={{ height:'220px', width:'100%', objectFit:'cover'}} className="" />
+         <Image src={image ? image : FeaturedImg } alt="" height={220} width={600} style={{ height:'220px', width:'100%', objectFit:'cover'}} className="" />
       </div>
       <div className="px-5 py-4 sm:px-8 sm:py-6 bg-white flex flex-col space-y-2">
         <h1 className="text-base sm:text-[1.3rem] font-medium sm:font-bold font-epilogue text-[#081b4b] leading-6 sm:leading-7">{title}</h1>
