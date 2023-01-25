@@ -5,7 +5,7 @@ import Link from 'next/link'
 export default function MobileMenuPill({ data }:any) {
   console.log(data)
   return (
-    <div className="z-10 px-8 py-5 flex flex-col space-y-3">
+    <div className={data?.categories?.length > 0 ? `z-10 px-8 py-5 flex flex-col space-y-3`: `z-10 px-8 pt-3 flex flex-col space-y-3`}>
         { data?.categories?.length > 0 
           ? <Link href={`/tag/${data?.slug?.current}`}><h1 className="text-sm font-bold tracking-widest uppercase text-gray-900">{data?.title}</h1></Link>
           : <h1 className="text-sm font-bold tracking-widest uppercase text-gray-900">{data?.title}</h1>
