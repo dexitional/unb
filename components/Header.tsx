@@ -36,6 +36,10 @@ function Header() {
     loadMenus()
   },[])
 
+  useEffect(() => {
+    console.log(data)
+  },[data])
+
   return (
     data ?
     <div className="z-20 w-full sticky top-0 bg-white">
