@@ -67,7 +67,7 @@ function index({ post,recent }: Props) {
                                 <h2 className="text-lg font-bold my-4" {...props}/>
                               ),
                               p: ({children}: any) => (
-                                <p className="my-20">{children}</p>
+                                <p className="my-5">{children}</p>
                               ),
                               a: ({children,...rest}: any) => (
                                 <a {...rest} className="border-b border-[#0069ff] text-[#0069ff] decoration-none">{children}</a>
@@ -76,11 +76,14 @@ function index({ post,recent }: Props) {
                               //  <div className="my-3">{children}</div>
                             // ),
                               li: ({children}: any) => (
-                                <li className="ml-4 list-disc">{children}</li>
+                                <li className="my-2 ml-4">{children}</li>
                               ),
                               ul: ({children}:any) => (
-                                <ul className="my-3 pl-5 leading-9">{children}</ul>
+                                <ul className="my-3 pl-5 leading-9 [&>li]:list-disc">{children}</ul>
                               ),
+                              ol: ({children}:any) => (
+                                <ol className="my-3 pl-5 leading-9 [&>li]:list-decimal">{children}</ol>
+                              )
                             }}
                         />
                     </article> }
