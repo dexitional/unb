@@ -34,7 +34,7 @@ function index({ post,recent }: Props) {
     </Head>
     <Layout>
       <div className="w-full min-h-screen bg-[#f9fafe] snap-y snap-mandatory">
-        <div className="px-5 sm:py-20  w-full sm:mx-auto sm:max-w-7xl flex flex-col sm:flex-row space-y-10 sm:space-y-0 sm:space-x-10">
+        <div className="px-5 sm:py-20  w-full md:mx-auto md:max-w-7xl flex flex-col md:flex-row space-y-10 sm:space-y-0 sm:space-x-10">
            <div className="w-[13%]"></div>
            {/* Article Content */}
            <div className="flex-1 flex flex-col items-center space-y-8">
@@ -79,12 +79,11 @@ function index({ post,recent }: Props) {
                                 <li className="ml-4 list-disc">{children}</li>
                               ),
                               ul: ({children}:any) => (
-                                 <ul className="my-3 pl-5 leading-9">{children}</ul>
+                                <ul className="my-3 pl-5 leading-9">{children}</ul>
                               ),
                             }}
                         />
                     </article> }
-            
            </div>
 
            {/* SideBar */}
@@ -123,27 +122,45 @@ const query = `
   `
 
 export async function getStaticPaths() {
-  const paths = await sanityClient.fetch(
-    `*[_type == "post" && defined(slug.current)][].slug.current`
-  )
-
-  return {
-    paths: paths.map((slug: Props) => ({params: {slug}})),
-    fallback: true,
+  try {
+    const paths = await sanityClient.fetch(
+      `*[_type == "post" && defined(slug.current)][].slug.current`
+    )
+    return {
+      paths: paths.map((slug: Props) => ({ params: {slug} })),
+      fallback: true,
+    }
+  } catch(e){
+    return {
+      paths: [],
+      fallback: true,
+    }
   }
 }
 
 export async function getStaticProps(context: any) {
   // It's important to default the slug so that it doesn't return "undefined"
   const { slug = "" } = context.params
-  const result = await sanityClient.fetch(query, { slug })
-  return {
-    props: {
-      post: result?.post,
-      recent: result?.recent
-    },
-    revalidate: 600,
+  try {
+    const result = await sanityClient.fetch(query, { slug })
+    return {
+      props: {
+        post: result?.post,
+        recent: result?.recent
+      },
+      revalidate: 600,
+    }
+  } catch(e){
+    return {
+      props: {
+        post: [],
+        recent: []
+      },
+      revalidate: 600,
+    }
+
   }
+  
 }
 
 export default index
