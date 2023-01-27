@@ -16,12 +16,10 @@ const readingTime = require('reading-time');
 function index({ posts,category,total,num }: any) {
   const router = useRouter()
   const { slug = "" } = router.query
-  const [ data,setData ] = useState(posts)
+  const [ data,setData ] = useState({ [router.asPath]: posts })
   const [ start,setStart ] = useState(num)
   const [ loading,setLoading ] = useState(false)
   
-  
-
   const loadMore = async () => {
       setLoading(true)
       const end = start+limit
@@ -29,7 +27,7 @@ function index({ posts,category,total,num }: any) {
       try{
         const result = await sanityClient.fetch(query, { slug,start,end })
         if(result){
-            setData([ ...data, ...result.posts ])
+            setData({ ...data, [router.asPath]:[...data[router.asPath],...result.posts ]})
             setStart(end+1)
             setLoading(false)
         }
@@ -40,8 +38,8 @@ function index({ posts,category,total,num }: any) {
   }
 
   useEffect(() => {
-
-    
+     //setData([])
+     console.log(data)
   },[router.asPath])
 
   return (
@@ -54,7 +52,7 @@ function index({ posts,category,total,num }: any) {
            <div className="space-y-10">
               {/*  Articles */}
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-6 lg:gap-8">
-                { posts?.map((row:any, i:React.Key) => {
+                { data[router.asPath]?.map((row:any, i:React.Key) => {
                   const stats = readingTime(blockContentToPlainText(row.body));
                   return (
                     <NewsCard key={i} title={row.title} image={urlFor(row.mainImage).width(600).url()} category={row.categories[0]} author={row.name} date={moment(row._createdAt).format('LL')} read={stats.text} link={`/${row.slug.current}`}/>
