@@ -28,7 +28,7 @@ function index({ post,recent }: Props) {
       <meta property="og:title" content={post?.title} />
       <meta property="og:image" content={post?.mainImage && urlFor(post?.mainImage).width(600).url()} />
       <meta property="og:type" content="profile.image" />
-      <meta property="og:url" content={`${siteUrl}/${post?.slug.current}`} />
+      <meta property="og:url" content={`${siteUrl}/${post?.slug?.current}`} />
       <meta name="description" content={blockContentToPlainText(post?.body).substring(0,160)} /><meta name="keywords" content={post?.keywords} />
       <meta name="author" content={post?.name} />
     </Head>
@@ -38,10 +38,10 @@ function index({ post,recent }: Props) {
            <div className="w-[13%]"></div>
            {/* Article Content */}
            <div className="flex-1 flex flex-col items-center space-y-8">
-               <div className="flex flex-wrap sm:space-x-10 sm:items-center">
-                {post?.categories?.map((r:any, i:React.Key) =>(<span key={i} className="my-1 px-4 py-2 rounded-md bg-[#ffc001] font-bold font-jetbrains">{r.title}</span>))}
+               <div className="flex flex-wrap space-x-4 sm:space-x-10 sm:items-center">
+                {post?.categories?.map((r:any, i:React.Key) =>(<span key={i} className="my-1 px-3 py-1 md:px-4 md:py-2 rounded-md bg-[#ffc001] text-sm font-bold font-jetbrains">{r.title}</span>))}
                </div>
-               <h1 className="text-3xl sm:text-5xl text-gray-700  font-bold font-epilogue sm:leading-[3.5rem]">{post?.title}</h1>
+               <h1 className="text-2xl sm:text-5xl text-gray-700  font-bold font-epilogue sm:leading-[3.5rem]">{post?.title}</h1>
                <div className="hidden">
                   <div className="flex space-x-4 items-center">
                      <span className="w-12 h-12 bg-slate-100 border-2 rounded-full"></span>
@@ -53,9 +53,9 @@ function index({ post,recent }: Props) {
                </div>
               
                { post?.body && 
-                    <article className="w-full prose lg:prose-xl">
+                    <article className="w-full prose-sm lg:prose-xl">
                         <PortableText 
-                            className={`text-lg text-[#4d5b7c] [&>a]:border-b [&>a]:border-[#0069ff] [&>a]:text-[#0069ff] [&>a]:decoration`}
+                            className={`text-lg text-[#2d3b5c] [&>a]:border-b [&>a]:border-[#0069ff] [&>a]:text-[#0069ff] [&>a]:decoration`}
                             dataset={process.env.NEXT_PUBLIC_SANITY_DATASET!}
                             projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!}
                             content={post?.body}

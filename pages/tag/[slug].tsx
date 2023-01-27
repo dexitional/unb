@@ -1,13 +1,14 @@
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { FaCloudRain } from 'react-icons/fa'
+import { ImSpinner9 } from 'react-icons/im'
 import Breadcrump from '../../components/Breadcrump'
 import Layout from '../../components/Layout'
 import NewsCard from '../../components/NewsCard'
 import PageTitle from '../../components/PageTitle'
 import { sanityClient, urlFor } from '../../sanity'
 import { blockContentToPlainText } from 'react-portable-text'
+import NewsCardShim from '../../components/NewsCardShim'
 
 const limit = 9;
 const readingTime = require('reading-time');
@@ -24,10 +25,9 @@ function index({ posts,category,total,num }: any) {
   const loadMore = async () => {
       setLoading(true)
       const end = start+limit
-      const range = `${start}..${end}`
-      const query = `{ "posts": *[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) {title,slug,"name": author->name,"avatar": author->image,"categories": categories[]->title,mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[$range] }`
+      const query = `{ "posts": *[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) {title,slug,"name": author->name,"avatar": author->image,"categories": categories[]->title,mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[$start..$end] }`
       try{
-        const result = await sanityClient.fetch(query, { slug,range })
+        const result = await sanityClient.fetch(query, { slug,start,end })
         if(result){
             setData([ ...data, ...result.posts ])
             setStart(end+1)
@@ -41,6 +41,9 @@ function index({ posts,category,total,num }: any) {
 
   useEffect(() => {
 
+    return ()=>{
+      setData([])
+    }
   },[])
 
   return (
@@ -52,8 +55,8 @@ function index({ posts,category,total,num }: any) {
            {/* Content Cards */}
            <div className="space-y-10">
               {/*  Articles */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-8">
-                { data?.map((row:any, i:React.Key) => {
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-6 lg:gap-8">
+                { [...posts,...data]?.map((row:any, i:React.Key) => {
                   const stats = readingTime(blockContentToPlainText(row.body));
                   return (
                     <NewsCard key={i} title={row.title} image={urlFor(row.mainImage).width(600).url()} category={row.categories[0]} author={row.name} date={moment(row._createdAt).format('LL')} read={stats.text} link={`/${row.slug.current}`}/>
@@ -63,9 +66,9 @@ function index({ posts,category,total,num }: any) {
               {/* Loader */}
               <div className="flex items-center justify-center">
                 { loading 
-                  ? <FaCloudRain className="p-4 h-16 w-16 border-2 border-blue-600 rounded-full text-blue-600" />
+                  ? <ImSpinner9 className="p-4 h-16 w-16 border-2 border-blue-900 rounded-full text-blue-900 animate-spin" />
                   : data.length < total
-                  ? <button onClick={loadMore} className="px-5 py-3 font-semibold hover:bg-blue-600 hover:border-white hover:text-white border border-gray-300 rounded-lg">Load More</button>
+                  ? <button onClick={loadMore} className="px-5 py-3 font-semibold hover:bg-blue-900 hover:border-white hover:text-white border border-gray-300 rounded-lg">Load More</button>
                   : null }
               </div>
            </div>
@@ -84,13 +87,25 @@ export async function getServerSideProps(context: any, num = 0 ) {
     "total": count(*[_type == "post" && $slug in categories[]->slug.current]) 
   }
   `
+  console.log(query, { slug,start:num,end:limit })
   try {
     const result = await sanityClient.fetch(query, { slug,start:num,end:limit })
+    console.log(result)
+    if(result)
+      return {
+        props: {
+          posts: result?.posts,
+          category: result?.category,
+          total: result?.total,
+          num
+        }
+      }
+
     return {
       props: {
-        posts: result?.posts,
-        category: result?.category,
-        total: result?.total,
+        posts: [],
+        category: {},
+        total: 0,
         num
       }
     }

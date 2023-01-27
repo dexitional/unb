@@ -5,6 +5,14 @@ import Analytics from 'analytics'
 //@ts-ignore
 import googleAnalytics from '@analytics/google-analytics'
 import { useEffect } from 'react';
+import Router from 'next/router';
+import NProgress from 'nprogress'; 
+import 'nprogress/nprogress.css'; 
+
+//Binding events. 
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done()); 
+Router.events.on('routeChangeError', () => NProgress.done());
 
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -18,11 +26,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     ]
   })
   /* Track a page view */
-     analytics.page()
+  analytics.page()
 
   useEffect(() => {
     OneSignal.init({ appId: '2403f9ce-30d0-4d3e-95e3-748cb571bce3' });
   }, []);
+
   return <Component {...pageProps} />
 }
 
