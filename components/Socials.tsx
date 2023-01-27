@@ -5,7 +5,7 @@ import Link from 'next/link'
 function Socials({ siteUrl,title,slug }: any) {
   return (
     <div className="flex flex-1 flex-wrap items-center gap-2">
-        <Link href={`https://twitter.com/intent/tweet?text=${encodeURI(title)}&url=${encodeURI(siteUrl+'/'+slug)}`}><FaTwitter className="p-3 w-12 h-12 bg-blue-600 text-white rounded-lg cursor-pointer"/></Link>
+        <Link href={`https://twitter.com/intent/tweet?text=${encodeURI(title)}&url=${encodeURI(siteUrl+'/'+slug)}`}><FaTwitter className="p-3 w-10 h-10 bg-blue-600 text-white rounded-lg cursor-pointer"/></Link>
         <Link href={`https://www.facebook.com/sharer.php?u=${encodeURI(siteUrl+'/'+slug)}`}><FaFacebookF className="p-3 w-10 h-10 bg-blue-600 text-white rounded-lg cursor-pointer"/></Link>
         <Link href={`https://telegram.me/share/url?url=${encodeURI(siteUrl+'/'+slug)}&text=${encodeURI(title)}`}><FaTelegram className="p-3 w-10 h-10 bg-blue-600 text-white rounded-lg cursor-pointer"/></Link>
         <Link href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURI(siteUrl+'/'+slug)}&title=${encodeURI(title)}`}><FaLinkedin className="p-3 w-10 h-10 bg-blue-600 text-white rounded-lg cursor-pointer"/></Link>

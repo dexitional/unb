@@ -70,7 +70,7 @@ function index({ post,recent }: Props) {
                                 <p className="my-5">{children}</p>
                               ),
                               a: ({children,...rest}: any) => (
-                                <a {...rest} className="border-b border-[#0069ff] text-[#0069ff] decoration-none">{children}</a>
+                                <a {...rest} className="underline decoration-[#0069ff] text-[#0069ff]">{children}</a>
                               ),
                             // image:  ({children}:any) => (
                               //  <div className="my-3">{children}</div>

@@ -16,7 +16,7 @@ const readingTime = require('reading-time');
 function index({ posts,category,total,num }: any) {
   const router = useRouter()
   const { slug = "" } = router.query
-  const [ data,setData ] = useState(posts)
+  const [ data,setData ] = useState<any>([])
   const [ start,setStart ] = useState(num)
   const [ loading,setLoading ] = useState(false)
   
@@ -29,9 +29,9 @@ function index({ posts,category,total,num }: any) {
       try{
         const result = await sanityClient.fetch(query, { slug,start,end })
         if(result){
-            setData([ ...data, ...result.posts ])
-            setStart(end+1)
-            setLoading(false)
+          setData([ ...data, ...result.posts ])
+          setStart(data.length)
+          setLoading(false)
         }
       } catch(e){
         console.log(e)
@@ -40,9 +40,24 @@ function index({ posts,category,total,num }: any) {
   }
 
   useEffect(() => {
+    alert(JSON.stringify(posts))
+    if (data.length < 1) {
+      setData(posts);
+      setLoading(false);
+    }
+  },[])
 
-    
-  },[router.asPath])
+  useEffect(() => {
+    console.log(data)
+  },[data])
+
+  
+  // useEffect(() => {
+  //   if (data.length < 1) {
+  //     setData(posts);
+  //     setLoading(false);
+  //   }
+  // },[router.asPath])
 
   return (
     <Layout>
@@ -89,21 +104,11 @@ export async function getServerSideProps(context: any, num = 0 ) {
   try {
     const result = await sanityClient.fetch(query, { slug,start:num,end:limit })
     console.log(result)
-    if(result)
-      return {
-        props: {
-          posts: result?.posts,
-          category: result?.category,
-          total: result?.total,
-          num
-        }
-      }
-
     return {
       props: {
-        posts: [],
-        category: {},
-        total: 0,
+        posts: result?.posts,
+        category: result?.category,
+        total: result?.total,
         num
       }
     }
@@ -112,6 +117,7 @@ export async function getServerSideProps(context: any, num = 0 ) {
     return {
       props: {
         posts: [],
+        category: {},
         num
       }
     }
