@@ -40,10 +40,8 @@ function index({ posts,category,total,num }: any) {
   }
 
   useEffect(() => {
-    alert(JSON.stringify(posts))
     if (data.length < 1) {
-      setData(posts);
-      setLoading(false);
+      setData([...posts]);
     }
   },[])
 
@@ -74,7 +72,12 @@ function index({ posts,category,total,num }: any) {
                   return (
                     <NewsCard key={i} title={row.title} image={urlFor(row.mainImage).width(600).url()} category={row.categories[0]} author={row.name} date={moment(row._createdAt).format('LL')} read={stats.text} link={`/${row.slug.current}`}/>
                   )
-                })}
+                }) 
+                || 
+                <div className="">
+                  No Posts
+                </div>
+                }
               </div>
               {/* Loader */}
               <div className="flex items-center justify-center">
