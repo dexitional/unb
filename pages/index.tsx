@@ -58,7 +58,7 @@ export async function getServerSideProps(context: any) {
        if(secs && secs.length > 0){
           mdata = await Promise.all(secs.map(async (sc: any,i: number) => {
             let dm = { title: sc.title, slug: sc.slug, content: [] }
-            const sec = await sanityClient.fetch(`*[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }`,{ slug: sc.slug.current})
+            const sec = await sanityClient.fetch(`*[_type == "post" && $slug in categories[]->slug.current] | order(_createdAt desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }`,{ slug: sc.slug.current})
             if(sec && sec.length > 0) 
               return dm = { ...dm, content: sec }
             return dm;

@@ -13,7 +13,7 @@ function FeaturedCard({ data }: any) {
       <Link key={i} href={`/${row.slug.current}`} className="w-full flex-shrink-0 snap-center">
       <div className="overflow-hidden bg-red-100">
           <div className="sm:h-[25rem] bg-blue-900">
-            <Image src={row.mainImage ? urlFor(row.mainImage).url(): Logo} alt="Featured Image" height={100} width={600} style={{ height:'400px',width:'100%', objectFit:'cover' }} />
+            <Image src={row.mainImage ? urlFor(row.mainImage).url(): Logo} alt="Featured Image" height={100} width={600} style={{ height:'400px',width:'100%', objectFit:'cover' }} priority />
           </div>
           <div className="px-3 sm:px-8 py-5 sm:py-6 bg-slate-50 flex flex-col space-y-3">
           <h1 className="text-lg sm:text-3xl font-semibold font-epilogue text-gray-800">{row.title}</h1>
