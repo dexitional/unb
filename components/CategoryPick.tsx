@@ -9,7 +9,8 @@ function CategoryPick({ data }: any) {
         <div className="w-full flex flex-wrap gap-2 sm:gap-3 text-xs sm:text-[0.97rem] font-sans font-semibold text-gray-700">
           { data?.map((row: any, i: number) => {
               //const color = colors[(i%(colors.length-1))]
-              return <Link key={i} href={`/tag/${row.slug.current}`} className={row.color ? `p-2 rounded-md bg-[${row.color}] font-jetbrains`:`p-2 rounded-md bg-[#ffc001] font-jetbrains`}>{row.title}</Link>
+              // row.color ? `p-2 rounded-md bg-[${row.color}] font-jetbrains`:`p-2 rounded-md bg-[#ffc001] font-jetbrains`
+              return <Link key={i} href={`/tag/${row.slug.current}`} className={`p-2 rounded-md bg-[#ffc001] font-jetbrains`}>{row.title}</Link>
           })}
         </div>
     </div>
