@@ -43,8 +43,8 @@ export async function getServerSideProps(context: any) {
   const query = `
   {
     "topics": *[_type == "category" && is_topic == 1]  { title,slug,color},
-    "spots": *[_type == "post" && is_spot == 1] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[0..5],
-    "picks": *[_type == "post" && is_pick == 1] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[0..3],
+    "spots": *[_type == "post" && is_spot == 1] | order(_createdAt desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[0..5],
+    "picks": *[_type == "post" && is_pick == 1] | order(_createdAt desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[0..3],
     "sections": *[_type == "category" && is_section == 1] { title,slug }
   }
   `
