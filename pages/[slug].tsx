@@ -49,7 +49,7 @@ function index({ post,recent }: Props) {
                   </div>
                </div>
                <div className="my-6 aspect-video relative w-full flex items-center justify-center rounded-lg overflow-hidden">
-                   <Image src={post?.mainImage ? urlFor(post?.mainImage).height(480).url() : FeatureImg } alt="Featured Image" height={300} width={640} style={{ height:'auto', width:'100%', objectFit:'cover'}} className="w-full rounded-lg"/>
+                   <Image src={post?.mainImage ? urlFor(post?.mainImage).height(480).url() : FeatureImg } alt="Featured Image" height={300} width={640} style={{ height:'auto', width:'100%', objectFit:'cover'}} className="w-full rounded-lg" priority />
                </div>
               
                { post?.body && 
