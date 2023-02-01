@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // }
 
   try {
-    const { body: { _id, title, slug, mainImage, body, _createdAt } } = req
+    const { body: { title, slug, mainImage, body } } = req
     const content = blockContentToPlainText(body);
     const image = urlFor(mainImage).width(360).height(180).url()
     const icon = `https://www.uccnoticeboard.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.ae4f36d1.png&w=96&q=75`
@@ -32,7 +32,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       chrome_web_image: image,
       url: `https://www.uccnoticeboard.info/${slug?.current}`,
       included_segments: ['Subscribed Users'],
-      //  filters: [{ field: 'tag', key: 'level', relation: '>', value: 10 }]
     };
 
     const response = await client.createNotification(notification);
