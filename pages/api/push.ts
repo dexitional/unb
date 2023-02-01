@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).json({ message: "Must be a POST request" })
   }
 
-  
+
   // if (!isValidRequest(req, secret)) {
   //   res.status(401).json({ message: `Invalid signature: ${secret}` })
   //   return
@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       chrome_web_image: image,
       url: `https://www.uccnoticeboard.info/${slug?.current}`,
       included_segments: ['Subscribed Users'],
-      filters: [{ field: 'tag', key: 'level', relation: '>', value: 10 }]
+      //  filters: [{ field: 'tag', key: 'level', relation: '>', value: 10 }]
     };
 
     const response = await client.createNotification(notification);
