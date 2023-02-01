@@ -1,6 +1,8 @@
 import { isValidRequest } from "@sanity/webhook"
 import type { NextApiRequest, NextApiResponse } from "next"
 import { client } from '../../onesignal'
+import { sanityClient, urlFor } from '../../sanity'
+import PortableText, { blockContentToPlainText } from 'react-portable-text'
 
 const secret: any = process.env.SANITY_WEBHOOK_SECRET
 
@@ -16,34 +18,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { body: { type, slug } } = req
-    if (type) {
+    const { body: { _id, title, slug, mainImage, body, _createdAt } } = req
+    const content = blockContentToPlainText(body);
+    const image = urlFor(mainImage).width(360).height(180).url()
+    const icon = `https://www.uccnoticeboard.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.ae4f36d1.png&w=96&q=75`
+    const notification = {
+      headings: { 'en': title },
+      contents: { 'en': content.length < 126 ? content : content.substring(0, 126) + ' ...' },
+      chrome_web_icon: icon,
+      firefox_icon: icon,
+      chrome_web_image: image,
+      included_segments: ['Subscribed Users'],
+      filters: [{ field: 'tag', key: 'level', relation: '>', value: 10 }]
+    };
 
-      const notification = {
-        contents: {
-          'tr': 'Yeni bildirim',
-          'en': 'New notification',
-        },
-        included_segments: ['Subscribed Users'],
-        filters: [
-          { field: 'tag', key: 'level', relation: '>', value: 10 }
-        ]
-      };
-
-      // using async/await
-      try {
-        const response = await client.createNotification(notification);
-        console.log(response)
-        return res.json(response)
-      } catch (e) {
-        if (e) {
-          console.log(e);
-        }
-      }
-
-    }
+    const response = await client.createNotification(notification);
+    console.log(response)
+    return res.json(response)
 
   } catch (err) {
+    console.log(err)
     return res.status(500).send({ message: "Error revalidating" })
   }
 }
