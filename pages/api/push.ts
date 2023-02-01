@@ -28,6 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       chrome_web_icon: icon,
       firefox_icon: icon,
       chrome_web_image: image,
+      url:`https://www.uccnoticeboard.info/${slug?.current}`,
       included_segments: ['Subscribed Users'],
       filters: [{ field: 'tag', key: 'level', relation: '>', value: 10 }]
     };
