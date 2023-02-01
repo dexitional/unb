@@ -4,7 +4,7 @@ import { client } from '../../onesignal'
 import { sanityClient, urlFor } from '../../sanity'
 import PortableText, { blockContentToPlainText } from 'react-portable-text'
 
-const secret: any = process.env.SANITY_WEBHOOK_SECRET
+const secret: any = process.env.SANITY_WEBHOOK_SECRET || 'DHRCdodowa1'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
