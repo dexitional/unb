@@ -1,11 +1,8 @@
 import { isValidRequest } from "@sanity/webhook"
 import type { NextApiRequest, NextApiResponse } from "next"
+import { client } from '../../onesignal'
 
-type Data = {
-  message: string
-}
-
-const secret:any = process.env.SANITY_WEBHOOK_SECRET
+const secret: any = process.env.SANITY_WEBHOOK_SECRET
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   if (req.method !== "POST") {
@@ -19,17 +16,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 
   try {
-    const {
-      body: { type, slug },
-    } = req
+    const { body: { type, slug } } = req
+    if (type) {
 
-    switch (type) {
-      case "post":
-        await res.revalidate(`/news/${slug}`)
-        return res.json({ message: `Revalidated "${type}" with slug "${slug}"` })
+      const notification = {
+        contents: {
+          'tr': 'Yeni bildirim',
+          'en': 'New notification',
+        },
+        included_segments: ['Subscribed Users'],
+        filters: [
+          { field: 'tag', key: 'level', relation: '>', value: 10 }
+        ]
+      };
+
+      // using async/await
+      try {
+        const response = await client.createNotification(notification);
+        console.log(response)
+        return res.json(response)
+      } catch (e) {
+        if (e) {
+          console.log(e);
+        }
+      }
+
     }
 
-    return res.json({ message: "No managed type" })
   } catch (err) {
     return res.status(500).send({ message: "Error revalidating" })
   }

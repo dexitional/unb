@@ -23,6 +23,11 @@ export default {
       type: 'number',
     },
     {
+      name: 'section_order',
+      title: 'Section Order',
+      type: 'number',
+    },
+    {
       name: 'position',
       title: 'Position',
       type: 'number',
