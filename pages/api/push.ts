@@ -4,7 +4,7 @@ import { client } from '../../onesignal'
 
 const secret: any = process.env.SANITY_WEBHOOK_SECRET
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     console.error("Must be a POST request")
     return res.status(401).json({ message: "Must be a POST request" })
