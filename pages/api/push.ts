@@ -4,7 +4,8 @@ import { client } from '../../onesignal'
 import { sanityClient, urlFor } from '../../sanity'
 import PortableText, { blockContentToPlainText } from 'react-portable-text'
 
-const secret: any = process.env.SANITY_WEBHOOK_SECRET || 'DHRCdodowa1'
+// const secret: any = process.env.SANITY_WEBHOOK_SECRET || 'DHRCdodowa1'
+const secret: any = 'DHRCdodowa1'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -28,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       chrome_web_icon: icon,
       firefox_icon: icon,
       chrome_web_image: image,
-      url:`https://www.uccnoticeboard.info/${slug?.current}`,
+      url: `https://www.uccnoticeboard.info/${slug?.current}`,
       included_segments: ['Subscribed Users'],
       filters: [{ field: 'tag', key: 'level', relation: '>', value: 10 }]
     };
