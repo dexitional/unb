@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const icon = `https://www.uccnoticeboard.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.ae4f36d1.png&w=96&q=75`
     const notification = {
       headings: { 'en': title },
-      contents: { 'en': content.length < 126 ? content : content.substring(0, 126) + ' ...' },
+      contents: { 'en': content.length < 120 ? content : content.substring(0, 120) + ' ...' },
       chrome_web_icon: icon,
       firefox_icon: icon,
       chrome_web_image: image,
