@@ -13,10 +13,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).json({ message: "Must be a POST request" })
   }
 
-  if (!isValidRequest(req, secret)) {
-    res.status(401).json({ message: `Invalid signature: ${secret}` })
-    return
-  }
+  
+  // if (!isValidRequest(req, secret)) {
+  //   res.status(401).json({ message: `Invalid signature: ${secret}` })
+  //   return
+  // }
 
   try {
     const { body: { _id, title, slug, mainImage, body, _createdAt } } = req
