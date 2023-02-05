@@ -22,7 +22,7 @@ function index({ posts,category,total,num }: any) {
   const [ loading,setLoading ] = useState(false)
   
   const [ currentPage,setCurrentPage ] = useState(1);
-  const itemsPerPage  = 6;
+  const itemsPerPage  = 12;
 
   const paginate = (pageNumber:any) => setCurrentPage(pageNumber);
 
