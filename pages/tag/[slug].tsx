@@ -9,6 +9,7 @@ import PageTitle from '../../components/PageTitle'
 import { sanityClient, urlFor } from '../../sanity'
 import { blockContentToPlainText } from 'react-portable-text'
 import NewsCardShim from '../../components/NewsCardShim'
+import Pagination from '../../components/Pagination'
 
 const limit = 9;
 const readingTime = require('reading-time');
@@ -20,7 +21,14 @@ function index({ posts,category,total,num }: any) {
   const [ start,setStart ] = useState(num)
   const [ loading,setLoading ] = useState(false)
   
-  
+  const [ currentPage,setCurrentPage ] = useState(1);
+  const itemsPerPage  = 6;
+
+  const paginate = (pageNumber:any) => setCurrentPage(pageNumber);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = posts.slice(indexOfFirstItem,indexOfLastItem)
 
   const loadMore = async () => {
       setLoading(true)
@@ -39,35 +47,21 @@ function index({ posts,category,total,num }: any) {
       }
   }
 
-  useEffect(() => {
-    if (data.length < 1) {
-      setData([...posts]);
-    }
-  },[])
-
-  useEffect(() => {
-    console.log(data)
-  },[data])
+  
 
   
-  // useEffect(() => {
-  //   if (data.length < 1) {
-  //     setData(posts);
-  //     setLoading(false);
-  //   }
-  // },[router.asPath])
 
   return (
     <Layout>
       <div className="p-5 w-full min-h-screen bg-[#f9fafe] snap-y snap-mandatory">
-        <div className="py-6 sm:mx-auto sm:max-w-7xl flex flex-col space-y-6">
+        <div className="py-6 sm:mx-auto sm:max-w-7xl flex flex-col space-y-4">
            {/* <Breadcrump /> */}
            <PageTitle title={category?.title} />
            {/* Content Cards */}
            <div className="space-y-10">
               {/*  Articles */}
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-6 lg:gap-8">
-                { posts?.map((row:any, i:React.Key) => {
+                { currentItems?.map((row:any, i:React.Key) => {
                   const stats = readingTime(blockContentToPlainText(row.body));
                   return (
                     <NewsCard key={i} title={row.title} image={urlFor(row.mainImage).width(600).url()} category={row.categories[0]} author={row.name} date={moment(row._createdAt).format('LL')} read={stats.text} link={`/${row.slug.current}`}/>
@@ -87,6 +81,13 @@ function index({ posts,category,total,num }: any) {
                   ? <button onClick={loadMore} className="px-5 py-3 font-semibold hover:bg-blue-900 hover:border-white hover:text-white border border-gray-300 rounded-lg">Load More</button>
                   : null }
               </div>
+
+              <Pagination 
+                itemsPerPage={itemsPerPage}
+                totalItems={posts.length}
+                paginate={paginate}
+                currentPage={currentPage}
+              />
            </div>
         </div>
       </div>
@@ -96,9 +97,16 @@ function index({ posts,category,total,num }: any) {
 
 export async function getServerSideProps(context: any, num = 0 ) {
   const { slug = "" } = context.params
+  // const query = `
+  // {
+  //   "posts": *[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[$start..$end],
+  //   "category": *[_type == "category" && $slug == slug.current] { title,slug}[0],
+  //   "total": count(*[_type == "post" && $slug in categories[]->slug.current]) 
+  // }
+  // `
   const query = `
   {
-    "posts": *[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} }[$start..$end],
+    "posts": *[_type == "post" && $slug in categories[]->slug.current] | order(_id desc) { title,slug,"name": author->name,"avatar": author->image,"categories":categories[]->title, mainImage,_createdAt,body[]{ ..., asset->{ ..., "_key": _id }} },
     "category": *[_type == "category" && $slug == slug.current] { title,slug}[0],
     "total": count(*[_type == "post" && $slug in categories[]->slug.current]) 
   }

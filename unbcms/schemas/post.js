@@ -77,6 +77,7 @@ export default {
       media: 'mainImage',
     },
     prepare(selection) {
+      console.log(selection)
       const {author} = selection
       return Object.assign({}, selection, {
         subtitle: author && `by ${author}`,
