@@ -49,8 +49,6 @@ function index({ posts,category,total,num }: any) {
 
   
 
-  
-
   return (
     <Layout>
       <div className="p-5 w-full min-h-screen bg-[#f9fafe] snap-y snap-mandatory">
@@ -74,7 +72,7 @@ function index({ posts,category,total,num }: any) {
                 }
               </div>
               {/* Loader */}
-              <div className="flex items-center justify-center">
+              <div className="hidden items-center justify-center">
                 { loading 
                   ? <ImSpinner9 className="p-4 h-16 w-16 border-2 border-blue-900 rounded-full text-blue-900 animate-spin" />
                   : data.length < total
