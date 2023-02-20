@@ -10,6 +10,8 @@ function MyDocument() {
          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;400;500;600;700;800&display=swap" rel="stylesheet" />
          <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;400;500;600;700;800&display=swap" rel="stylesheet" />
          <Script async src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"></Script>
+         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4676341155028169"
+     crossorigin="anonymous"></script>
       </Head>
      
       <body className="font-inter">
